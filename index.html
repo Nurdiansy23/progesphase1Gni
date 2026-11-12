@@ -11,7 +11,7 @@ button,select,input{font:inherit;border:1px solid var(--line);border-radius:8px;
 .section{margin-top:16px}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:13px}.sectiontitle{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}.sectiontitle h2{font-size:16px;margin:0}.muted{color:var(--muted);font-size:12px}
 .roomgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.roomtile{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px;text-align:left;cursor:pointer}.roomtile.active{border:2px solid var(--blue);background:#eff5ff;padding:9px}.roomtile b{display:block;font-size:12px}.roomtile span{font-size:11px;color:var(--muted)}.mini{height:5px;background:#e9eef6;border-radius:8px;margin-top:8px;overflow:hidden}.mini i{display:block;height:100%;background:var(--green)}
 .progressbar{height:8px;background:#e9eef6;border-radius:10px;overflow:hidden;min-width:75px}.progressbar i{height:100%;display:block;background:var(--blue)}
-.tablewrap{overflow:auto;max-height:570px;border:1px solid var(--line);border-radius:9px}table{border-collapse:collapse;width:100%;font-size:12px;background:white}th,td{padding:9px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#f8fafd;color:#65738a;font-size:10px;text-transform:uppercase;z-index:1}td input{width:86px;padding:6px 7px;text-align:right;border-radius:6px}td .qty{width:70px}td .daily{border-color:#a9c4f7;background:#f7faff}.status{font-weight:700;border-radius:20px;padding:4px 7px;font-size:10px}.done{color:#08764a;background:#e4f6ed}.pending{color:#99610a;background:#fff2d9}
+.tablewrap{overflow:auto;max-height:570px;border:1px solid var(--line);border-radius:9px}table{border-collapse:collapse;width:100%;font-size:12px;background:white}th,td{padding:9px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#f8fafd;color:#65738a;font-size:10px;text-transform:uppercase;z-index:1}td input{width:86px;padding:6px 7px;text-align:right;border-radius:6px}td .qty{width:70px}td .daily{border-color:#a9c4f7;background:#f7faff}td .remark{width:190px;min-width:170px;text-align:left;background:#fffdf5;border-color:#eadcae}td .updated{font-size:11px;color:#536278}.status{font-weight:700;border-radius:20px;padding:4px 7px;font-size:10px}.done{color:#08764a;background:#e4f6ed}.pending{color:#99610a;background:#fff2d9}
 .roomhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.roomhead h2{margin:0;font-size:17px}.hint{font-size:12px;color:var(--muted);margin:9px 0 0}.summarytable td:last-child{font-weight:700}.floorlabel{font-weight:700;color:#42536d}
 @media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}.roomgrid{grid-template-columns:repeat(4,1fr)}.twocol{grid-template-columns:1fr}}
 @media(max-width:520px){main{padding:0 10px}.cards{grid-template-columns:repeat(2,1fr)}.roomgrid{grid-template-columns:repeat(2,1fr)}h1{font-size:18px}}
@@ -32,13 +32,13 @@ button,select,input{font:inherit;border:1px solid var(--line);border-radius:8px;
 </div>
 <div class="section card">
 <div class="sectiontitle"><h2>Summary Progress Per Room</h2><span class="muted">Otomatis dihitung dari seluruh item pekerjaan</span></div>
-<div class="tablewrap"><table class="summarytable"><thead><tr><th>No</th><th>Room</th><th>Floor</th><th>Total Point</th><th>Install</th><th>Progress</th><th>Visual</th></tr></thead><tbody id="summaryRows"></tbody><tfoot id="summaryFoot"></tfoot></table></div>
+<div class="tablewrap"><table class="summarytable"><thead><tr><th>No</th><th>Room</th><th>Floor</th><th>Total Point</th><th>Install</th><th>Progress</th><th>Visual</th><th>Update Terakhir</th></tr></thead><tbody id="summaryRows"></tbody><tfoot id="summaryFoot"></tfoot></table></div>
 </div>
 <div class="section card"><div class="sectiontitle"><h2>Pilih Ruangan untuk Update</h2><span class="muted">Klik room untuk membuka daftar item dan mengisi progres</span></div><div class="roomgrid" id="roomGrid"></div></div>
 <div class="section card">
 <div class="roomhead"><div><h2 id="selectedRoom">LT.1 1A-C</h2><div class="muted" id="roomMeta">Update item pekerjaan pada tanggal yang dipilih</div></div><div class="filters"><input id="searchItem" placeholder="Cari item pekerjaan..."><select id="statusFilter"><option value="">Semua status</option><option value="DONE">DONE</option><option value="NY">NOT YET</option></select></div></div>
-<p class="hint">Isi kolom <b>Progress Hari Ini</b> sesuai hasil pekerjaan aktual. Carryover dapat diedit jika ada koreksi data awal. Total progress, status, persentase, dan summary seluruh ruangan dihitung otomatis.</p>
-<div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>No.</th><th>Item Pekerjaan</th><th>Qty</th><th>UoM</th><th>Carryover</th><th>Progress Hari Ini</th><th>Total Install</th><th>% Progress</th><th>Status</th></tr></thead><tbody id="detailRows"></tbody></table></div>
+<p class="hint">Isi kolom <b>Progress Hari Ini</b> sesuai hasil pekerjaan aktual. Setelah perubahan disimpan, <b>Tanggal Update</b> akan tercatat otomatis mengikuti tanggal update yang dipilih. Isi <b>Keterangan</b> untuk catatan pekerjaan, kendala, atau informasi lapangan. Carryover dapat diedit jika ada koreksi data awal.</p>
+<div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>No.</th><th>Item Pekerjaan</th><th>Qty</th><th>UoM</th><th>Carryover</th><th>Progress Hari Ini</th><th>Total Install</th><th>% Progress</th><th>Status</th><th>Tanggal Update</th><th>Keterangan</th></tr></thead><tbody id="detailRows"></tbody></table></div>
 </div>
 <div class="section twocol">
 <div class="card"><div class="sectiontitle"><h2>Progress per Lantai</h2></div><div id="floorSummary"></div></div>
@@ -53,30 +53,41 @@ const key='dci_phase1_progress_v2';
 function load(){try{let x=localStorage.getItem(key);if(x){let saved=JSON.parse(x);if(Array.isArray(saved)&&saved.length===rooms.length)rooms=saved}}catch(e){}}
 function save(){try{localStorage.setItem(key,JSON.stringify(rooms));$('saveState').textContent='● Tersimpan otomatis · '+new Date().toLocaleTimeString('id-ID')}catch(e){$('saveState').textContent='! Penyimpanan browser penuh'}}
 function floor(name){return name.startsWith('LT.1')?'Lantai 1':name.startsWith('LT.2')?'Lantai 2':'Lantai 3'}
+function latestUpdate(r){let ds=r.items.map(x=>x.lastUpdated||'').filter(Boolean).sort();return ds.length?ds[ds.length-1]:''}
 function totals(r){let qty=0,install=0,active=false;for(let x of r.items){let p=Number(x.carry||0)+Object.values(x.daily||{}).reduce((a,b)=>a+Number(b||0),0);p=Math.min(p,Number(x.qty||0));qty+=Number(x.qty||0);install+=p;if(p>0)active=true}return {qty,install,percent:pct(install,qty),active}}
 function allTotals(){let q=0,p=0,active=0;rooms.forEach(r=>{let t=totals(r);q+=t.qty;p+=t.install;if(t.active)active++});return {q,p,active}}
 function render(){
  let all=allTotals();$('overall').textContent=pct(all.p,all.q).toFixed(2)+'%';$('installTotal').textContent=fmt(all.p)+' / '+fmt(all.q)+' point';$('roomCount').textContent=rooms.length;$('activeRooms').textContent=all.active;$('remaining').textContent=fmt(Math.max(0,all.q-all.p));
- $('summaryRows').innerHTML=rooms.map((r,i)=>{let t=totals(r);return `<tr><td>${i+1}</td><td><b>${r.name}</b></td><td>${floor(r.name)}</td><td>${fmt(t.qty)}</td><td>${fmt(t.install)}</td><td><b>${t.percent.toFixed(2)}%</b></td><td><div class="progressbar"><i style="width:${Math.min(100,t.percent)}%"></i></div></td></tr>`}).join('');
- $('summaryFoot').innerHTML=`<tr><th colspan="3">TOTAL PHASE 1</th><th>${fmt(all.q)}</th><th>${fmt(all.p)}</th><th>${pct(all.p,all.q).toFixed(2)}%</th><th></th></tr>`;
+ $('summaryRows').innerHTML=rooms.map((r,i)=>{let t=totals(r);return `<tr><td>${i+1}</td><td><b>${r.name}</b></td><td>${floor(r.name)}</td><td>${fmt(t.qty)}</td><td>${fmt(t.install)}</td><td><b>${t.percent.toFixed(2)}%</b></td><td><div class="progressbar"><i style="width:${Math.min(100,t.percent)}%"></i></div></td><td class="updated">${formatDateId(latestUpdate(r))}</td></tr>`}).join('');
+ $('summaryFoot').innerHTML=`<tr><th colspan="3">TOTAL PHASE 1</th><th>${fmt(all.q)}</th><th>${fmt(all.p)}</th><th>${pct(all.p,all.q).toFixed(2)}%</th><th></th><th></th></tr>`;
  $('roomGrid').innerHTML=rooms.map((r,i)=>{let t=totals(r);return `<button class="roomtile ${i===selected?'active':''}" data-room="${i}"><b>${r.name}</b><span>${t.percent.toFixed(2)}% · ${fmt(t.install)}/${fmt(t.qty)}</span><div class="mini"><i style="width:${Math.min(100,t.percent)}%"></i></div></button>`}).join('');
  document.querySelectorAll('[data-room]').forEach(b=>b.onclick=()=>{selected=Number(b.dataset.room);render()});
  $('selectedRoom').textContent=rooms[selected].name;$('roomMeta').textContent=floor(rooms[selected].name)+' · '+rooms[selected].items.length+' item pekerjaan';
  renderDetails();renderFloors();
 }
+function formatDateId(value){
+ if(!value)return 'Belum diupdate';
+ const d=new Date(value+'T00:00:00');
+ return Number.isNaN(d.getTime())?value:d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
+}
 function renderDetails(){
  const r=rooms[selected],date=$('workDate').value,search=$('searchItem').value.toLowerCase(),status=$('statusFilter').value;
  let rows=r.items.map((x,i)=>({x,i,p:Math.min(Number(x.qty||0),Number(x.carry||0)+Object.values(x.daily||{}).reduce((a,b)=>a+Number(b||0),0))}));
- rows=rows.filter(o=>(!search||o.x.name.toLowerCase().includes(search)||String(o.x.group||'').toLowerCase().includes(search)||String(o.x.sub||'').toLowerCase().includes(search))&&(!status||(o.p>=Number(o.x.qty)?'DONE':'NY')===status));
+ rows=rows.filter(o=>(!search||o.x.name.toLowerCase().includes(search)||String(o.x.group||'').toLowerCase().includes(search)||String(o.x.sub||'').toLowerCase().includes(search)||String(o.x.remark||'').toLowerCase().includes(search))&&(!status||(o.p>=Number(o.x.qty)?'DONE':'NY')===status));
  let lastGroup=null,lastSub=null,html='';
  rows.forEach(({x,i,p})=>{
-  if(x.group && x.group!==lastGroup){html+=`<tr style="background:#eaf1fb"><td colspan="9" style="font-weight:800;color:#183b68;padding:11px 10px;font-size:13px">${x.group}</td></tr>`;lastGroup=x.group;lastSub=null}
-  if(x.sub && x.sub!==lastSub){html+=`<tr style="background:#f6f8fc"><td colspan="9" style="font-weight:700;color:#45546b;padding:8px 10px">　${x.sub}</td></tr>`;lastSub=x.sub}
+  if(x.group && x.group!==lastGroup){html+=`<tr style="background:#eaf1fb"><td colspan="11" style="font-weight:800;color:#183b68;padding:11px 10px;font-size:13px">${x.group}</td></tr>`;lastGroup=x.group;lastSub=null}
+  if(x.sub && x.sub!==lastSub){html+=`<tr style="background:#f6f8fc"><td colspan="11" style="font-weight:700;color:#45546b;padding:8px 10px">　${x.sub}</td></tr>`;lastSub=x.sub}
   let today=Number((x.daily||{})[date]||0),pc=pct(p,x.qty),done=p>=Number(x.qty);
-  html+=`<tr><td>${i+1}</td><td>${x.name}</td><td><input class="qty" type="number" min="0" step="any" value="${x.qty}" data-i="${i}" data-field="qty"></td><td>${x.uom||''}</td><td><input type="number" min="0" step="any" value="${x.carry||0}" data-i="${i}" data-field="carry"></td><td><input class="daily" type="number" min="0" step="any" value="${today}" data-i="${i}" data-field="daily" data-date="${date}"></td><td><b>${fmt(p)}</b></td><td><b>${pc.toFixed(2)}%</b></td><td><span class="status ${done?'done':'pending'}">${done?'DONE':'NOT YET'}</span></td></tr>`;
+  html+=`<tr><td>${i+1}</td><td>${x.name}</td><td><input class="qty" type="number" min="0" step="any" value="${x.qty}" data-i="${i}" data-field="qty"></td><td>${x.uom||''}</td><td><input type="number" min="0" step="any" value="${x.carry||0}" data-i="${i}" data-field="carry"></td><td><input class="daily" type="number" min="0" step="any" value="${today}" data-i="${i}" data-field="daily" data-date="${date}"></td><td><b>${fmt(p)}</b></td><td><b>${pc.toFixed(2)}%</b></td><td><span class="status ${done?'done':'pending'}">${done?'DONE':'NOT YET'}</span></td><td class="updated">${formatDateId(x.lastUpdated||'')}</td><td><input class="remark" type="text" maxlength="300" placeholder="Tambah keterangan..." value="${String(x.remark||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}" data-i="${i}" data-field="remark"></td></tr>`;
  });
- $('detailRows').innerHTML=html||'<tr><td colspan="9" style="padding:20px;text-align:center;color:#728096">Tidak ada item pekerjaan sesuai filter.</td></tr>';
- document.querySelectorAll('[data-field]').forEach(inp=>inp.addEventListener('change',()=>{let i=Number(inp.dataset.i),field=inp.dataset.field,val=Math.max(0,Number(inp.value)||0),item=rooms[selected].items[i];if(field==='daily'){item.daily=item.daily||{};if(val===0)delete item.daily[inp.dataset.date];else item.daily[inp.dataset.date]=val}else item[field]=val;save();render()}));
+ $('detailRows').innerHTML=html||'<tr><td colspan="11" style="padding:20px;text-align:center;color:#728096">Tidak ada item pekerjaan sesuai filter.</td></tr>';
+ document.querySelectorAll('[data-field]').forEach(inp=>inp.addEventListener('change',()=>{
+  let i=Number(inp.dataset.i),field=inp.dataset.field,item=rooms[selected].items[i];
+  if(field==='remark'){item.remark=inp.value.trim();if(item.remark)item.lastUpdated=date;}
+  else {let val=Math.max(0,Number(inp.value)||0);if(field==='daily'){item.daily=item.daily||{};if(val===0)delete item.daily[inp.dataset.date];else item.daily[inp.dataset.date]=val;}else item[field]=val;item.lastUpdated=date;}
+  save();render();
+ }));
 }
 function renderFloors(){
  let groups=['Lantai 1','Lantai 2','Lantai 3'];$('floorSummary').innerHTML=groups.map(f=>{let rs=rooms.filter(r=>floor(r.name)===f),q=0,p=0;rs.forEach(r=>{let t=totals(r);q+=t.qty;p+=t.install});let pc=pct(p,q);return `<div style="margin:13px 0"><div style="display:flex;justify-content:space-between"><b>${f}</b><b>${pc.toFixed(2)}%</b></div><div class="progressbar" style="height:10px;margin:6px 0"><i style="width:${Math.min(100,pc)}%"></i></div><div class="muted">${fmt(p)} / ${fmt(q)} point · ${rs.length} room</div></div>`}).join('');
@@ -87,17 +98,17 @@ $('backupBtn').onclick=()=>download('DCI_Phase1_Backup.json',JSON.stringify(room
 function download(name,content,type){let a=document.createElement('a'),url=URL.createObjectURL(new Blob([content],{type}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 $('exportXlsx').onclick=()=>{
  if(typeof XLSX==='undefined'){alert('Library Excel belum termuat. Periksa koneksi internet.');return}
- let wb=XLSX.utils.book_new(),sum=[['Summary Progress Per Room'],[],['No','Room','Total Point','Install','% Progress']];
- rooms.forEach((r,i)=>{let t=totals(r);sum.push([i+1,r.name,t.qty,t.install,t.percent/100])});
- let all=allTotals();sum.push(['','Total',all.q,all.p,all.p/all.q]);
- let ws=XLSX.utils.aoa_to_sheet(sum);ws['!cols']=[{wch:8},{wch:18},{wch:16},{wch:16},{wch:15}];XLSX.utils.book_append_sheet(wb,ws,'Summary');
+ let wb=XLSX.utils.book_new(),sum=[['Summary Progress Per Room'],[],['No','Room','Total Point','Install','% Progress','Update Terakhir']];
+ rooms.forEach((r,i)=>{let t=totals(r);sum.push([i+1,r.name,t.qty,t.install,t.percent/100,latestUpdate(r)])});
+ let all=allTotals();sum.push(['','Total',all.q,all.p,all.p/all.q,'']);
+ let ws=XLSX.utils.aoa_to_sheet(sum);ws['!cols']=[{wch:8},{wch:18},{wch:16},{wch:16},{wch:15},{wch:18}];XLSX.utils.book_append_sheet(wb,ws,'Summary');
  rooms.forEach(r=>{
   let dates=[...new Set(r.items.flatMap(x=>Object.keys(x.daily||{})))].sort();
-  let maxDates=Math.max(30,dates.length),header=['No','Item Pekerjaan','Qty','UoM','Status','Carryover Progress','Total Progress',...dates];
+  let header=['No','Item Pekerjaan','Qty','UoM','Status','Carryover Progress','Total Progress','Tanggal Update','Keterangan',...dates];
   let aoa=[['PROGRESS PEKERJAAN PHASE 1'],[r.name],header];
-  r.items.forEach((x,i)=>{let install=Object.values(x.daily||{}).reduce((a,b)=>a+Number(b||0),0),total=Number(x.carry||0)+install;aoa.push([i+1,x.name,x.qty,x.uom,total>=x.qty?'DONE':'NY',x.carry,install,...dates.map(d=>Number((x.daily||{})[d]||0))])});
-  aoa.push(['','Total Point',r.items.reduce((a,x)=>a+Number(x.qty||0),0),'','',r.items.reduce((a,x)=>a+Number(x.carry||0),0),r.items.reduce((a,x)=>a+Object.values(x.daily||{}).reduce((z,v)=>z+Number(v||0),0),0)]);
-  let sh=XLSX.utils.aoa_to_sheet(aoa);sh['!cols']=[{wch:8},{wch:48},{wch:12},{wch:12},{wch:14},{wch:20},{wch:18},...dates.map(()=>({wch:13}))];XLSX.utils.book_append_sheet(wb,sh,r.name.slice(0,31));
+  r.items.forEach((x,i)=>{let install=Object.values(x.daily||{}).reduce((a,b)=>a+Number(b||0),0),total=Number(x.carry||0)+install;aoa.push([i+1,x.name,x.qty,x.uom,total>=x.qty?'DONE':'NY',x.carry,install,x.lastUpdated||'',x.remark||'',...dates.map(d=>Number((x.daily||{})[d]||0))])});
+  aoa.push(['','Total Point',r.items.reduce((a,x)=>a+Number(x.qty||0),0),'','',r.items.reduce((a,x)=>a+Number(x.carry||0),0),r.items.reduce((a,x)=>a+Object.values(x.daily||{}).reduce((z,v)=>z+Number(v||0),0),0),'','']);
+  let sh=XLSX.utils.aoa_to_sheet(aoa);sh['!cols']=[{wch:8},{wch:48},{wch:12},{wch:12},{wch:14},{wch:20},{wch:18},{wch:16},{wch:38},...dates.map(()=>({wch:13}))];XLSX.utils.book_append_sheet(wb,sh,r.name.slice(0,31));
  });
  XLSX.writeFile(wb,'Progress_Pekerjaan_Phase1_UPDATED.xlsx');
 };
